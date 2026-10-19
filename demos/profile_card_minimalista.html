@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiara Sinha - Profile Card</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            neutral: {
+              50: '#fafafa',
+              100: '#f4f4f5',
+              200: '#e4e4e7',
+              300: '#d4d4d8',
+              400: '#a1a1aa',
+              500: '#71717a',
+              600: '#52525b',
+              700: '#3f3f46',
+              800: '#27272a',
+              900: '#18181b',
+              950: '#09090b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 min-h-screen flex flex-col justify-center items-center p-4 sm:p-6 transition-colors duration-300">
+
+  <!-- Main Container -->
+  <main class="w-full max-w-md">
+    
+    <!-- Profile Card -->
+    <div class="bg-white dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 rounded-2xl p-8 sm:p-10 transition-all duration-300 relative">
+      
+      <!-- Top Action Bar (Theme Toggle) -->
+      <div class="flex justify-between items-center mb-8">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium tracking-wide bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          Available
+        </span>
+
+        <button id="themeToggle" aria-label="Toggle dark mode" class="text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 transition-colors p-1.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800">
+          <!-- Sun Icon (Dark Mode Active) -->
+          <svg id="sunIcon" class="w-4 h-4 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2"/>
+            <path d="M12 20v2"/>
+            <path d="m4.93 4.93 1.41 1.41"/>
+            <path d="m17.66 17.66 1.41 1.41"/>
+            <path d="M2 12h2"/>
+            <path d="M20 12h2"/>
+            <path d="m6.34 17.66-1.41 1.41"/>
+            <path d="m19.07 4.93-1.41 1.41"/>
+          </svg>
+          <!-- Moon Icon (Light Mode Active) -->
+          <svg id="moonIcon" class="w-4 h-4 block dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Header Section: Avatar & Identity -->
+      <div class="flex flex-col items-center text-center mb-8">
+        <!-- Minimal Avatar -->
+        <div class="w-20 h-20 rounded-full border border-neutral-200 dark:border-neutral-700 flex items-center justify-center bg-neutral-50 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 text-xl font-light tracking-wider mb-5">
+          <img 
+        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400" 
+        class="w-full h-full rounded-full object-cover" 
+        alt="KS"  >
+        </div>
+        
+        <!-- Name & Title -->
+        <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">
+          Kiara Sinha
+        </h1>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 font-normal mt-1 tracking-wide">
+          Senior Product Designer
+        </p>
+      </div>
+
+      <!-- Bio -->
+      <p class="text-sm text-neutral-600 dark:text-neutral-300 font-normal leading-relaxed text-center mb-8 max-w-xs mx-auto">
+        Passionate about creating intuitive digital experiences that blend aesthetics with functionality. Specializing in user-centered design and innovative interface solutions.
+      </p>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-3 gap-2 py-5 my-8 border-y border-neutral-100 dark:border-neutral-800/80 text-center">
+        <div>
+          <div class="text-base font-medium text-neutral-900 dark:text-neutral-100">3.2K</div>
+          <div class="text-[11px] text-neutral-400 dark:text-neutral-500 font-medium tracking-wider uppercase mt-0.5">Followers</div>
+        </div>
+        <div>
+          <div class="text-base font-medium text-neutral-900 dark:text-neutral-100">245</div>
+          <div class="text-[11px] text-neutral-400 dark:text-neutral-500 font-medium tracking-wider uppercase mt-0.5">Projects</div>
+        </div>
+        <div>
+          <div class="text-base font-medium text-neutral-900 dark:text-neutral-100">4.9</div>
+          <div class="text-[11px] text-neutral-400 dark:text-neutral-500 font-medium tracking-wider uppercase mt-0.5">Rating</div>
+        </div>
+      </div>
+
+      <!-- Skills Section -->
+      <div class="mb-8">
+        <h2 class="text-[11px] text-neutral-400 dark:text-neutral-500 font-medium uppercase tracking-widest text-center mb-3.5">
+          Core Skills
+        </h2>
+        <div class="flex flex-wrap justify-center gap-1.5">
+          <span class="px-3 py-1 rounded-md bg-neutral-100 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 text-xs font-normal border border-neutral-200/50 dark:border-neutral-700/40">UI Design</span>
+          <span class="px-3 py-1 rounded-md bg-neutral-100 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 text-xs font-normal border border-neutral-200/50 dark:border-neutral-700/40">UX Research</span>
+          <span class="px-3 py-1 rounded-md bg-neutral-100 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 text-xs font-normal border border-neutral-200/50 dark:border-neutral-700/40">Figma</span>
+          <span class="px-3 py-1 rounded-md bg-neutral-100 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 text-xs font-normal border border-neutral-200/50 dark:border-neutral-700/40">Prototyping</span>
+          <span class="px-3 py-1 rounded-md bg-neutral-100 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 text-xs font-normal border border-neutral-200/50 dark:border-neutral-700/40">Design Systems</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="space-y-4">
+        <!-- Main CTA Button -->
+        <a href="mailto:kiara@example.com" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-neutral-900 hover:bg-neutral-800 dark:bg-neutral-100 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 rounded-lg text-xs font-medium tracking-wide transition-all duration-200">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="16" x="2" y="4" rx="2"/>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+          Get In Touch
+        </a>
+
+        <!-- Discrete Social Links -->
+        <div class="flex items-center justify-center gap-4 pt-2">
+          <!-- LinkedIn -->
+          <a href="#" aria-label="LinkedIn Profile" class="text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors p-1.5">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect x="2" y="9" width="4" height="12"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+
+          <!-- GitHub -->
+          <a href="#" aria-label="GitHub Profile" class="text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors p-1.5">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+              <path d="M9 18c-4.51 2-5-2-7-2"/>
+            </svg>
+          </a>
+
+          <!-- Dribbble -->
+          <a href="#" aria-label="Dribbble Profile" class="text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors p-1.5">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"/>
+              <path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"/>
+              <path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"/>
+            </svg>
+          </a>
+
+          <!-- Twitter (X) -->
+          <a href="#" aria-label="Twitter Profile" class="text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors p-1.5">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer Copyright -->
+    <p class="text-center text-xs text-neutral-400 dark:text-neutral-600 mt-6 font-normal">
+      © Kiara Sinha · Senior Product Designer
+    </p>
+
+  </main>
+
+  <script>
+    // Dark/Light Theme Switching Logic
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const htmlElement = document.documentElement;
+
+    // Check preferred system theme or previous setting
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      htmlElement.classList.add('dark');
+    } else {
+      htmlElement.classList.remove('dark');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      if (htmlElement.classList.contains('dark')) {
+        htmlElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        htmlElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiara Sinha // 3D Claymorphism Profile Card</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            clay: {
+              bg: '#E2E8F0',
+              bgDark: '#0F172A',
+              card: '#F1F5F9',
+              pink: '#F472B6',
+              purple: '#A78BFA',
+              cyan: '#38BDF8',
+              amber: '#FBBF24',
+              mint: '#34D399',
+              rose: '#FB7185'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Light Mode Claymorphism Styles */
+    .clay-card {
+      background: #f8fafc;
+      border-radius: 2.5rem;
+      box-shadow: 
+        20px 20px 40px #cbd5e1, 
+        -20px -20px 40px #ffffff,
+        inset 4px 4px 8px rgba(255, 255, 255, 0.9),
+        inset -6px -6px 12px rgba(148, 163, 184, 0.2);
+    }
+
+    .clay-card-sub {
+      background: #f1f5f9;
+      border-radius: 1.75rem;
+      box-shadow: 
+        10px 10px 20px #cbd5e1, 
+        -10px -10px 20px #ffffff,
+        inset 2px 2px 4px rgba(255, 255, 255, 0.8),
+        inset -4px -4px 8px rgba(148, 163, 184, 0.15);
+    }
+
+    .clay-btn-primary {
+      background: linear-gradient(135deg, #f472b6, #ec4899);
+      border-radius: 1.5rem;
+      color: white;
+      box-shadow: 
+        8px 8px 16px rgba(236, 72, 153, 0.35),
+        -6px -6px 12px rgba(255, 255, 255, 0.8),
+        inset 3px 3px 6px rgba(255, 255, 255, 0.4),
+        inset -3px -3px 6px rgba(157, 23, 77, 0.3);
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .clay-btn-primary:active {
+      transform: scale(0.95);
+      box-shadow: 
+        3px 3px 8px rgba(236, 72, 153, 0.4),
+        inset 4px 4px 8px rgba(157, 23, 77, 0.4);
+    }
+
+    .clay-btn-secondary {
+      background: #f1f5f9;
+      border-radius: 1.5rem;
+      color: #334155;
+      box-shadow: 
+        8px 8px 16px #cbd5e1, 
+        -8px -8px 16px #ffffff,
+        inset 2px 2px 4px rgba(255, 255, 255, 0.9),
+        inset -3px -3px 6px rgba(148, 163, 184, 0.2);
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .clay-btn-secondary:active {
+      transform: scale(0.95);
+      box-shadow: 
+        inset 3px 3px 6px #cbd5e1,
+        inset -3px -3px 6px #ffffff;
+    }
+
+    .clay-badge {
+      background: #f8fafc;
+      border-radius: 1rem;
+      box-shadow: 
+        5px 5px 10px #d1d5db, 
+        -5px -5px 10px #ffffff,
+        inset 2px 2px 4px rgba(255, 255, 255, 0.8),
+        inset -2px -2px 4px rgba(156, 163, 175, 0.2);
+    }
+
+    .clay-avatar {
+      border-radius: 2rem;
+      box-shadow: 
+        12px 12px 24px #cbd5e1, 
+        -12px -12px 24px #ffffff,
+        inset 4px 4px 8px rgba(255, 255, 255, 0.6),
+        inset -4px -4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Dark Mode Claymorphism Adjustments */
+    .dark .clay-card {
+      background: #1e293b;
+      box-shadow: 
+        16px 16px 32px #090d16, 
+        -12px -12px 28px #2a3a52,
+        inset 3px 3px 6px rgba(255, 255, 255, 0.1),
+        inset -5px -5px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .dark .clay-card-sub {
+      background: #1e293b;
+      box-shadow: 
+        8px 8px 18px #0a0e17, 
+        -8px -8px 18px #28384f,
+        inset 2px 2px 4px rgba(255, 255, 255, 0.08),
+        inset -3px -3px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .dark .clay-btn-secondary {
+      background: #1e293b;
+      color: #f1f5f9;
+      box-shadow: 
+        6px 6px 14px #090d16, 
+        -6px -6px 14px #28384f,
+        inset 2px 2px 4px rgba(255, 255, 255, 0.1),
+        inset -3px -3px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .dark .clay-badge {
+      background: #1e293b;
+      box-shadow: 
+        4px 4px 10px #090d16, 
+        -4px -4px 10px #2a3a52,
+        inset 2px 2px 3px rgba(255, 255, 255, 0.08),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    .dark .clay-avatar {
+      box-shadow: 
+        10px 10px 20px #080c14, 
+        -10px -10px 20px #2a3b54,
+        inset 3px 3px 6px rgba(255, 255, 255, 0.15),
+        inset -4px -4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Soft floating animation */
+    @keyframes clayFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    .animate-clay-float {
+      animation: clayFloat 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-200 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col justify-between transition-colors duration-300 p-4 sm:p-8">
+
+  <header class="max-w-4xl w-full mx-auto flex items-center justify-between mb-8">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 clay-badge flex items-center justify-center text-pink-500 font-bold text-lg">
+        KS
+      </div>
+      <div>
+        <h1 class="font-bold text-slate-900 dark:text-white text-base leading-none">Kiara Sinha</h1>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">3D Claymorphic Specialist</p>
+      </div>
+    </div>
+
+    <button id="themeToggle" aria-label="Toggle Dark Mode" class="clay-btn-secondary p-3 flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
+      <i data-lucide="sun" class="w-5 h-5 text-amber-500 hidden dark:block"></i>
+      <i data-lucide="moon" class="w-5 h-5 text-indigo-600 block dark:hidden"></i>
+    </button>
+  </header>
+
+  <main class="max-w-3xl w-full mx-auto my-auto">
+    <div class="clay-card p-6 sm:p-10 transition-all relative overflow-hidden">
+
+      <!-- TOP SECTION: Avatar, Status Badge & Heading -->
+      <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left mb-8">
+        
+        <!-- Inflated 3D Avatar Frame -->
+        <div class="relative shrink-0 animate-clay-float">
+          <div class="w-32 h-32 sm:w-36 sm:h-36 clay-avatar p-2 bg-gradient-to-tr from-pink-300 via-purple-300 to-sky-300 overflow-hidden">
+            <img 
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800" 
+              alt="Kiara Sinha Portrait" 
+              class="w-full h-full object-cover rounded-[1.5rem]"
+            />
+          </div>
+          <!-- Floating Status Bubble -->
+          <div class="absolute -bottom-2 -right-2 clay-badge px-3 py-1 bg-emerald-400 text-slate-900 font-bold text-xs flex items-center gap-1.5 shadow-md">
+            <span class="w-2 h-2 rounded-full bg-emerald-700 animate-ping"></span>
+            <span>Available</span>
+          </div>
+        </div>
+
+        <!-- Bio Details -->
+        <div class="space-y-2">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 clay-badge text-xs font-bold text-pink-500 dark:text-pink-400">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>3D & Tactile UI Designer</span>
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            Kiara Sinha
+          </h2>
+
+          <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-md">
+            Crafting tactile, inflated 3D interfaces and claymorphic design systems for Web3, mobile apps, and high-engagement digital products.
+          </p>
+
+          <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-2 text-xs font-medium text-slate-500 dark:text-slate-400">
+            <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-pink-500"></i> Granada / Remote</span>
+            <span class="flex items-center gap-1"><i data-lucide="globe" class="w-3.5 h-3.5 text-sky-500"></i> kiarasinha.design</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-3 sm:gap-4 mb-8">
+        <div class="clay-card-sub p-3 sm:p-4 text-center">
+          <span class="block text-xl sm:text-2xl font-extrabold text-pink-500 dark:text-pink-400">4.8k</span>
+          <span class="text-[10px] sm:text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Followers</span>
+        </div>
+        <div class="clay-card-sub p-3 sm:p-4 text-center">
+          <span class="block text-xl sm:text-2xl font-extrabold text-purple-500 dark:text-purple-400">180+</span>
+          <span class="text-[10px] sm:text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">3D Assets</span>
+        </div>
+        <div class="clay-card-sub p-3 sm:p-4 text-center">
+          <span class="block text-xl sm:text-2xl font-extrabold text-sky-500 dark:text-sky-400">4.98</span>
+          <span class="text-[10px] sm:text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Rating</span>
+        </div>
+      </div>
+
+      <div class="mb-8 space-y-3">
+        <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+          Core Clay Specialties
+        </h3>
+
+        <div class="flex flex-wrap gap-2.5" id="skillsContainer">
+          <div class="clay-badge px-3.5 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95 transition-all">
+            <span class="w-2.5 h-2.5 rounded-full bg-pink-400"></span> Spline 3D
+          </div>
+          <div class="clay-badge px-3.5 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95 transition-all">
+            <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span> Blender Sculpting
+          </div>
+          <div class="clay-badge px-3.5 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95 transition-all">
+            <span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span> Clay Systems
+          </div>
+          <div class="clay-badge px-3.5 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95 transition-all">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Rive Animations
+          </div>
+          <div class="clay-badge px-3.5 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95 transition-all">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span> Tactile Micro-UI
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center gap-4 pt-2">
+        <button id="hireBtn" class="clay-btn-primary w-full sm:w-auto px-8 py-3.5 font-bold text-sm flex items-center justify-center gap-2">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>Hire Kiara</span>
+        </button>
+
+        <a href="https://www.awwwards.com/inspiration/search?text=claymorphism" target="_blank" rel="noopener noreferrer" class="clay-btn-secondary w-full sm:w-auto px-6 py-3.5 font-bold text-sm flex items-center justify-center gap-2">
+          <i data-lucide="external-link" class="w-4 h-4 text-sky-500"></i>
+          <span>Awwwards Clay Collection</span>
+        </a>
+
+        <button id="shareBtn" class="clay-btn-secondary p-3.5 shrink-0 hidden sm:flex items-center justify-center" title="Share Profile">
+          <i data-lucide="share-2" class="w-4 h-4 text-slate-600 dark:text-slate-300"></i>
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="contactModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+    <div id="contactModalCard" class="clay-card p-6 sm:p-8 max-w-md w-full transform scale-95 transition-all duration-300">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+          <i data-lucide="message-square" class="w-5 h-5 text-pink-500"></i>
+          <span>Get in Touch</span>
+        </h3>
+        <button id="closeModalBtn" class="clay-btn-secondary p-2 rounded-full">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">
+        Send a message to Kiara Sinha for 3D Claymorphic project inquiries.
+      </p>
+
+      <form id="contactForm" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Your Name</label>
+          <input type="text" required placeholder="Alex Morgan" class="w-full px-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border-none text-xs font-medium text-slate-900 dark:text-white focus:ring-2 focus:ring-pink-400 outline-none">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Project Type</label>
+          <select class="w-full px-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border-none text-xs font-medium text-slate-900 dark:text-white focus:ring-2 focus:ring-pink-400 outline-none">
+            <option>3D Interface Design</option>
+            <option>Claymorphic Design System</option>
+            <option>Web3 / App Concept</option>
+          </select>
+        </div>
+        <button type="submit" class="clay-btn-primary w-full py-3 text-xs font-bold uppercase tracking-wider mt-2">
+          Send Inquiry
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 right-6 z-50 px-4 py-3 clay-badge bg-slate-900 text-white text-xs font-bold shadow-2xl transition-all duration-300 transform translate-y-12 opacity-0 pointer-events-none flex items-center gap-2">
+    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toastMessage">Action completed!</span>
+  </div>
+
+  <footer class="max-w-4xl w-full mx-auto text-center mt-8 text-xs text-slate-400 dark:text-slate-600">
+    <p>© 2026 Kiara Sinha // Claymorphism 3D Profile Architecture</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+
+      // Theme toggle
+      const themeToggleBtn = document.getElementById('themeToggle');
+      themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+      });
+
+      // Modal setup
+      const contactModal = document.getElementById('contactModal');
+      const contactModalCard = document.getElementById('contactModalCard');
+      const hireBtn = document.getElementById('hireBtn');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const contactForm = document.getElementById('contactForm');
+
+      function openModal() {
+        contactModal.classList.remove('opacity-0', 'pointer-events-none');
+        contactModalCard.classList.remove('scale-95');
+        contactModalCard.classList.add('scale-100');
+      }
+
+      function closeModal() {
+        contactModal.classList.add('opacity-0', 'pointer-events-none');
+        contactModalCard.classList.remove('scale-100');
+        contactModalCard.classList.add('scale-95');
+      }
+
+      hireBtn.addEventListener('click', openModal);
+      closeModalBtn.addEventListener('click', closeModal);
+      contactModal.addEventListener('click', (e) => {
+        if (e.target === contactModal) closeModal();
+      });
+
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        closeModal();
+        showToast("Inquiry sent directly to Kiara Sinha!");
+      });
+
+      // Share button
+      const shareBtn = document.getElementById('shareBtn');
+      if (shareBtn) {
+        shareBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(window.location.href);
+          showToast("Profile link copied to clipboard!");
+        });
+      }
+
+      // Toast utility
+      function showToast(msg) {
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toastMessage');
+        toastMsg.textContent = msg;
+        toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+        toast.classList.add('translate-y-0', 'opacity-100');
+
+        setTimeout(() => {
+          toast.classList.remove('translate-y-0', 'opacity-100');
+          toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+        }, 3000);
+      }
+    });
+  </script>
+</body>
+</html>

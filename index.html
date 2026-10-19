@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibe Coding - Profile Cards & Drag&Drop Loader</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- FontAwesome 6 CDN for social media & icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Google Fonts: Space Grotesk & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            terracotta: {
+              DEFAULT: '#D96B43',
+              50: '#FDF7F5',
+              100: '#FAF0EB',
+              200: '#F4DCCE',
+              300: '#EBB89B',
+              400: '#E2916C',
+              500: '#D96B43',
+              600: '#C24E25',
+              700: '#9C3919',
+              800: '#7B2E17',
+              900: '#642817',
+            },
+            cream: {
+              50: '#FFFEFA',
+              100: '#FAF7F0',
+              200: '#F3EDE0',
+              300: '#E7DDC9',
+            },
+            beige: {
+              DEFAULT: '#EFE7DA',
+              dark: '#D8CCB7',
+            },
+            ugr: {
+              red: '#C41230',
+              dark: '#8B0A1E',
+            }
+          },
+          boxShadow: {
+            'terracotta-glow': '0 0 25px -5px rgba(217, 107, 67, 0.4)',
+            'soft': '0 10px 30px -5px rgba(0, 0, 0, 0.05)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * {
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    /* Fondo con tono beige y apariencia de papel cuadriculado (Grid Paper) */
+    .bg-grid-paper {
+      background-color: #f7f3e9;
+      background-image: 
+        linear-gradient(to right, rgba(180, 160, 140, 0.18) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(180, 160, 140, 0.18) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    .dark .bg-grid-paper {
+      background-color: #0F172A;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Embedded responsive containers using clamp() */
+    .embed-responsive-container iframe,
+    .embed-responsive-container embed,
+    .embed-responsive-container object {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: clamp(280px, 45vh, 600px) !important;
+      border-radius: 1rem;
+    }
+
+    .drag-active-overlay {
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+    .drag-active-overlay.active {
+      pointer-events: auto;
+      opacity: 1;
+    }
+
+    /* Hide scrollbars smoothly */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-grid-paper text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col relative antialiased selection:bg-terracotta selection:text-white">
+
+  <!-- GLOBAL FULLSCREEN DRAG & DROP OVERLAY -->
+  <div id="globalDropOverlay" class="drag-active-overlay fixed inset-0 z-50 bg-terracotta/90 dark:bg-slate-900/95 backdrop-blur-md flex flex-col items-center justify-center text-white p-6 border-8 border-dashed border-white/40">
+    <div class="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center mb-4 animate-bounce">
+      <i data-lucide="file-up" class="w-12 h-12 text-white"></i>
+    </div>
+    <h2 class="font-display text-3xl sm:text-4xl font-bold mb-2 text-center">Sueltas tu archivo JSON aquí</h2>
+    <p class="text-white/80 text-base max-w-md text-center font-medium">Actualizaremos los perfiles automáticamente con tus nuevos datos.</p>
+  </div>
+
+  <!-- HEADER INSTITUCIONAL -->
+  <header class="sticky top-0 z-40 bg-[#f7f3e9]/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-stone-300 dark:border-slate-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- LOGO & BRAND -->
+        <a href="https://github.com/mgea/CRIAV" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3.5 group">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-terracotta to-amber-500 p-0.5 shadow-md group-hover:shadow-terracotta-glow transition-all">
+            <div class="w-full h-full bg-cream-100 dark:bg-slate-900 rounded-[0.9rem] flex items-center justify-center font-display font-extrabold text-terracotta dark:text-terracotta-400 text-lg">
+             <img src="https://github.com/mgea/CRIAv/blob/main/_logo_instagram_criav.png?raw=true">
+            </div>
+          </div>
+          <div class="flex flex-col">
+            <div class="flex items-center gap-2">
+              <span class="font-display font-bold text-slate-900 dark:text-white text-base sm:text-lg tracking-tight group-hover:text-terracotta transition-colors">
+                Vibe Coding Profile Cards
+              </span>
+              <span class="px-2 py-0.5 text-xs font-bold uppercase tracking-wider rounded-md bg-terracotta-100 text-terracotta dark:bg-terracotta-900/40 dark:text-terracotta-300 border border-terracotta/20">
+                Ejercicio JSON
+              </span>
+            </div>
+            <span class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium hidden sm:block">
+              Creatividad e Innovación Audiovisual • Facultad de Comunicación y Documentación
+            </span>
+          </div>
+        </a>
+
+        <!-- BARRA DE ACCIONES CON BOTÓN D&D + CARGAR FUSIONADO -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          
+          <!-- Botón de Cargar JSON + Drag & Drop Fusionado -->
+          <label 
+            title="Suelta un fichero JSON en cualquier parte de la pantalla o haz clic para seleccionarlo"
+            class="cursor-pointer flex items-center gap-2 px-3.5 py-2 text-xs sm:text-sm font-bold rounded-xl bg-terracotta text-white hover:bg-terracotta-600 shadow-sm hover:shadow-md transition-all active:scale-95 group"
+          >
+            <i data-lucide="upload-cloud" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
+            <span><span class="hidden sm:inline">/ Drag & Drop</span> JSON</span>
+            <input type="file" id="manualFileInput" accept=".json" class="hidden" />
+          </label>
+
+          <!-- Botón Editor JSON Modal -->
+          <button id="openJsonModalBtn" title="Ver o editar JSON" class="flex items-center gap-2 px-3 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-white/80 hover:bg-white dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-stone-300 dark:border-slate-700 transition-all">
+            <i data-lucide="file-json" class="w-4 h-4 text-terracotta"></i>
+            <span class="hidden md:inline"> Editar</span> Datos
+          </button>
+
+          <!-- Toggle Dark Theme -->
+          <button id="themeToggleBtn" aria-label="Cambiar tema" class="p-2.5 rounded-xl bg-white/80 hover:bg-white dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-stone-300 dark:border-slate-700 transition-all">
+            <i id="themeSunIcon" data-lucide="sun" class="w-4 h-4 text-amber-500 hidden dark:block"></i>
+            <i id="themeMoonIcon" data-lucide="moon" class="w-4 h-4 text-indigo-600 block dark:hidden"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+    
+    <!-- ALERTA / BANNER INFORMATIVO CERRABLE DE CARGA DE DATOS -->
+    <div id="dataStatusAlert" class="mb-6 rounded-2xl bg-amber-50 dark:bg-slate-900/90 border border-amber-200/80 dark:border-amber-800/40 p-4 shadow-sm flex items-start justify-between gap-4 transition-all">
+      <div class="flex items-start gap-3">
+        <div class="p-2 rounded-xl bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 shrink-0 mt-0.5">
+          <i data-lucide="info" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h4 id="statusAlertTitle" class="text-sm font-bold text-amber-900 dark:text-amber-200">
+            Estado del Sistema
+          </h4>
+          <p id="statusAlertText" class="text-xs sm:text-sm text-amber-700 dark:text-amber-300/80 mt-0.5 leading-relaxed">
+            Cargando perfiles iniciales...
+          </p>
+        </div>
+      </div>
+      <button id="dismissAlertBtn" title="Cerrar aviso" class="p-1.5 rounded-lg text-amber-700 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-slate-800 transition-colors shrink-0">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- HERO / SEARCH SECTION -->
+    <section class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/70 dark:bg-slate-900/60 backdrop-blur-sm border border-stone-300 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-terracotta/10 text-terracotta text-xs sm:text-sm font-bold mb-2">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+          <span>Single Page Application Dynamic Engine</span>
+        </div>
+        <h1 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
+          Catálogo Interactivo de Perfiles
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
+          Fichas cargadas dinámicamente. Puedes arrastrar y soltar un fichero JSON sobre la página para actualizarlas.
+        </p>
+      </div>
+
+      <!-- SEARCH & BADGE -->
+      <div class="flex flex-col sm:flex-row items-center gap-3">
+        <div class="relative w-full sm:w-64">
+          <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Buscar por nombre o skill..."
+            class="w-full pl-10 pr-4 py-2 rounded-xl bg-white dark:bg-slate-800 border border-stone-300 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-terracotta"
+          />
+        </div>
+        <div class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 rounded-xl border border-stone-300 dark:border-slate-700 text-xs sm:text-sm text-slate-600 dark:text-slate-300 shrink-0">
+          <i data-lucide="users" class="w-4 h-4 text-terracotta"></i>
+          <span>Cargados: <strong id="cardCountBadge" class="text-slate-900 dark:text-white font-bold">0</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORY FILTERS -->
+    <div id="filterCategoryContainer" class="flex items-center gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar text-xs sm:text-sm">
+      <!-- Filter buttons dynamically inserted -->
+    </div>
+
+    <!-- MAIN PROFILE CARDS GRID -->
+    <section id="profileCardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      <!-- Dynamic cards rendered here -->
+    </section>
+
+  </main>
+
+  <!-- MODAL EMBED & DEMO VIEWER -->
+  <div id="demoViewerModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/70 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+    <div id="demoViewerCard" class="bg-white dark:bg-slate-900 border border-stone-300 dark:border-slate-800 rounded-3xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl transform scale-95 transition-transform duration-300 overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-stone-200 dark:border-slate-800 flex items-center justify-between bg-stone-50 dark:bg-slate-900/50">
+        <div class="flex items-center gap-3">
+          <div class="p-2 rounded-xl bg-terracotta-50 text-terracotta dark:bg-terracotta-900/30">
+            <i data-lucide="layout" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 id="modalCardTitle" class="font-display text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+              Experiencia Interactiva
+            </h3>
+            <p id="modalCardSubtitle" class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Contenido o Demo en directo</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <a id="modalExternalLink" href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-stone-200 hover:bg-stone-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all">
+            <span>Ver fuente</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          </a>
+          <button id="closeDemoViewerBtn" class="p-2 rounded-xl text-slate-400 hover:text-slate-700 dark:hover:text-white transition-all">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body (Embed Container) -->
+      <div id="modalEmbedBody" class="p-6 flex-grow overflow-y-auto bg-stone-50 dark:bg-slate-950 flex items-center justify-center">
+        <!-- Embedded HTML injected here -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL JSON DATA VIEW/EDIT -->
+  <div id="jsonModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+    <div id="jsonModalCard" class="bg-white dark:bg-slate-900 border border-stone-300 dark:border-slate-800 rounded-3xl w-full max-w-3xl max-h-[85vh] flex flex-col shadow-2xl transform scale-95 transition-transform duration-300 overflow-hidden">
+      
+      <!-- JSON Modal Header -->
+      <div class="px-6 py-4 border-b border-stone-200 dark:border-slate-800 flex items-center justify-between bg-stone-50 dark:bg-slate-900">
+        <div class="flex items-center gap-3">
+          <div class="p-2 rounded-xl bg-terracotta-50 text-terracotta dark:bg-terracotta-900/30">
+            <i data-lucide="code" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-display text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+              Estructura JSON Activa
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Inspecciona o edita los datos de los perfiles</p>
+          </div>
+        </div>
+
+        <button id="closeJsonModalBtn" class="p-2 rounded-xl text-slate-400 hover:text-slate-700 dark:hover:text-white transition-all">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- JSON Editor Textarea -->
+      <div class="p-6 flex-grow flex flex-col space-y-4 overflow-y-auto">
+        <textarea 
+          id="jsonContentTextarea" 
+          spellcheck="false"
+          class="w-full h-80 p-4 rounded-2xl bg-slate-900 text-amber-300 font-mono text-xs sm:text-sm border border-slate-800 focus:outline-none focus:ring-2 focus:ring-terracotta shadow-inner leading-relaxed"
+        ></textarea>
+
+        <div id="jsonErrorAlert" class="hidden p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs sm:text-sm font-medium flex items-center gap-2">
+          <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+          <span id="jsonErrorMessage">Formato JSON inválido</span>
+        </div>
+      </div>
+
+      <!-- JSON Modal Footer -->
+      <div class="px-6 py-4 border-t border-stone-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-stone-50 dark:bg-slate-900">
+        <button id="resetJsonBtn" class="px-4 py-2 rounded-xl border border-stone-300 dark:border-slate-700 hover:bg-stone-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs sm:text-sm font-semibold transition-all">
+          Restablecer por defecto
+        </button>
+        <div class="flex items-center gap-2">
+          <button id="downloadJsonBtn" class="px-4 py-2 rounded-xl bg-stone-200 hover:bg-stone-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Exportar JSON</span>
+          </button>
+          <button id="applyJsonBtn" class="px-5 py-2 rounded-xl bg-terracotta hover:bg-terracotta-600 text-white text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-md transition-all">
+            <i data-lucide="check" class="w-3.5 h-3.5"></i>
+            <span>Aplicar Cambios</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-2xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs sm:text-sm font-medium shadow-2xl transition-all duration-300 transform translate-y-12 opacity-0 pointer-events-none flex items-center gap-2.5 border border-slate-800 dark:border-slate-200">
+    <i data-lucide="info" class="w-4 h-4 text-terracotta shrink-0"></i>
+    <span id="toastMessage">Acción completada</span>
+  </div>
+
+  <!-- FOOTER INSTITUCIONAL -->
+  <footer class="mt-auto bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-t border-stone-300 dark:border-slate-800 text-slate-600 dark:text-slate-400 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-center md:text-left">
+        <div class="font-display font-bold text-slate-900 dark:text-white text-sm sm:text-base flex items-center justify-center md:justify-start gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-terracotta"></span>
+          <span>Vibe Coding Architecture SPA</span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
+          Grado en Comunicación Audiovisual • Universidad de Granada
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3 text-xs sm:text-sm">
+        <a href="https://github.com/mgea/ViveCodingCards" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-stone-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-stone-300 dark:border-slate-700 hover:bg-stone-200 transition-all">
+          <i class="fa-brands fa-github"></i> VCC 1.0 CCBY Miguel Gea, 2026
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT ENGINE -->
+  <script>
+    /* ==========================================================================
+       DATOS DEFAULT POR DEFECTO
+       ========================================================================== */
+    const DEFAULT_PROFILE_CARDS = [
+      {
+        "id": "claymorphism-card",
+        "nombre": "Claymorphism 3D Soft Touch",
+        "categoria": "Claymorphism",
+        "destacado": true,
+        "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800",
+        "features": [
+          "Efectos de relieve suave con doble sombra interior y exterior",
+          "Bordes redondeados de alto radio (Border-radius 2rem+)",
+          "Paleta de colores pastel y mates estilo plastilina digital",
+          "Profundidad táctil amigable orientada a interfaces móviles y Web3",
+          "Microinteracciones con efecto de opresión o rebotado (Press animation)",
+          "Tipografía redondeada de alta legibilidad (Plus Jakarta Sans / Rounded)"
+        ],
+        "url-demo": "https://codepen.io/tag/claymorphism",
+        "url-ref": "https://www.awwwards.com/inspiration/search?text=claymorphism"
+      },
+      {
+        "id": "interactive-3d-bento",
+        "nombre": "Bento Grid Architectural Profile",
+        "categoria": "Bento UI",
+        "destacado": false,
+        "img": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800",
+        "features": [
+          "Distribución modular inspirada en cajas de Bento japonesas",
+          "Tarjetas secundarias e integraciones interactivas (widgets, proyectos, RRSS)",
+          "Animaciones de entrada tipo Staggered Fade & Slide",
+          "Transiciones fluidas con estado interactivo individual por bloque"
+        ],
+        "url-demo": "https://codepen.io/tag/bento-grid",
+        "url-ref": "https://www.awwwards.com/inspiration/search?text=bento-grid"
+      }
+    ];
+
+    // Estado global de la aplicación
+    let profileCards = [...DEFAULT_PROFILE_CARDS];
+    let selectedCategory = 'All';
+
+    /* ==========================================================================
+       GESTIÓN DE ALERTAS E INFORMACIÓN DE CARGA DE DATOS
+       ========================================================================== */
+    function updateDataStatusAlert(title, message, isError = false) {
+      const alertBox = document.getElementById('dataStatusAlert');
+      const alertTitle = document.getElementById('statusAlertTitle');
+      const alertText = document.getElementById('statusAlertText');
+
+      if (!alertBox || !alertTitle || !alertText) return;
+
+      alertTitle.textContent = title;
+      alertText.textContent = message;
+
+      if (isError) {
+        alertBox.className = "mb-6 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50 p-4 shadow-sm flex items-start justify-between gap-4 transition-all";
+      } else {
+        alertBox.className = "mb-6 rounded-2xl bg-amber-50/90 dark:bg-slate-900/90 border border-amber-200 dark:border-amber-800/40 p-4 shadow-sm flex items-start justify-between gap-4 transition-all";
+      }
+
+      alertBox.classList.remove('hidden');
+    }
+
+    function setupAlertDismiss() {
+      const dismissBtn = document.getElementById('dismissAlertBtn');
+      const alertBox = document.getElementById('dataStatusAlert');
+      if (dismissBtn && alertBox) {
+        dismissBtn.addEventListener('click', () => {
+          alertBox.classList.add('hidden');
+        });
+      }
+    }
+
+    /* ==========================================================================
+       INICIALIZACIÓN Y LECTURA AUTOMÁTICA (FETCH AUTOLOAD.JSON)
+       ========================================================================== */
+    window.addEventListener('DOMContentLoaded', async () => {
+      lucide.createIcons();
+
+      setupThemeToggle();
+      setupAlertDismiss();
+
+      // Intentar Lectura Automática (fetch profile-card.json o autoload.json)
+      await attemptAutoloadJson();
+
+      // Configurar Drag and Drop y Modales
+      setupDragAndDrop();
+      setupManualFileInput();
+      setupJsonModal();
+      setupDemoViewerModal();
+      setupSearch();
+    });
+
+    async function attemptAutoloadJson() {
+      try {
+        let response = await fetch('profile-card.json', { cache: 'no-cache' });
+        if (!response.ok) {
+          response = await fetch('autoload.json', { cache: 'no-cache' });
+        }
+        if (response.ok) {
+          const data = await response.json();
+          if (Array.isArray(data) && data.length > 0) {
+            profileCards = data;
+            updateDataStatusAlert(
+              'Carga Automática Completada',
+              `Se han cargado correctamente ${data.length} tarjetas de perfil.`
+            );
+            showToast('Perfiles cargados correctamente');
+          } else {
+            throw new Error('Estructura no válida');
+          }
+        } else {
+          throw new Error('Archivo no encontrado');
+        }
+      } catch (err) {
+        updateDataStatusAlert(
+          'Datos por defecto en uso',
+          'No se detectó el archivo de datos. Mostrando las tarjetas predeterminadas del sistema. Puedes arrastrar o cargar tu archivo JSON en cualquier momento.'
+        );
+      } finally {
+        renderApplication();
+      }
+    }
+
+    /* ==========================================================================
+       SISTEMA DRAG & DROP FUSIONADO CON BOTÓN DE CARGA
+       ========================================================================== */
+    function setupDragAndDrop() {
+      const overlay = document.getElementById('globalDropOverlay');
+      let dragCounter = 0;
+
+      window.addEventListener('dragenter', (e) => {
+        e.preventDefault();
+        dragCounter++;
+        overlay.classList.add('active');
+      });
+
+      window.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        dragCounter--;
+        if (dragCounter <= 0) {
+          dragCounter = 0;
+          overlay.classList.remove('active');
+        }
+      });
+
+      window.addEventListener('dragover', (e) => e.preventDefault());
+
+      window.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dragCounter = 0;
+        overlay.classList.remove('active');
+
+        if (e.dataTransfer && e.dataTransfer.files.length > 0) {
+          handleFileProcessing(e.dataTransfer.files[0], 'Drag & Drop');
+        }
+      });
+    }
+
+    function setupManualFileInput() {
+      const input = document.getElementById('manualFileInput');
+      input.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+          handleFileProcessing(e.target.files[0], 'Carga Manual');
+        }
+      });
+    }
+
+    function handleFileProcessing(file, method = 'Carga') {
+      if (!file.name.endsWith('.json') && file.type !== 'application/json') {
+        updateDataStatusAlert('Error de Formato', 'Por favor, selecciona un archivo con extensión .json válida.', true);
+        showToast('Formato no válido. Debe ser .json');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const parsed = JSON.parse(event.target.result);
+          if (!Array.isArray(parsed)) {
+            throw new Error('El archivo JSON debe ser una lista de objetos (Array []).');
+          }
+
+          profileCards = parsed;
+          renderApplication();
+
+          updateDataStatusAlert(
+            `¡Datos cargados con éxito! (${method})`,
+            `Se han cargado ${parsed.length} perfil(es) desde el fichero "${file.name}".`
+          );
+
+          showToast(`Procesado: ${file.name} (${parsed.length} tarjetas)`);
+        } catch (err) {
+          updateDataStatusAlert('Error al Leer JSON', err.message, true);
+          showToast('Error al parsear el fichero JSON');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    /* ==========================================================================
+       LÓGICA DE RENDERIZADO (TAMAÑO DE TEXTO INCREMENTADO PARA MEJOR LEGIBILIDAD)
+       ========================================================================== */
+    function renderApplication() {
+      renderCountBadge();
+      renderCategoryFilters();
+      renderCardsGrid();
+      lucide.createIcons();
+    }
+
+    function renderCountBadge() {
+      const badge = document.getElementById('cardCountBadge');
+      if (badge) badge.textContent = profileCards.length;
+    }
+
+    function renderCategoryFilters() {
+      const container = document.getElementById('filterCategoryContainer');
+      if (!container) return;
+
+      const categories = ['All', ...new Set(profileCards.map(c => c.categoria || 'General'))];
+
+      container.innerHTML = categories.map(cat => {
+        const isActive = selectedCategory === cat;
+        return `
+          <button 
+            onclick="selectCategory('${cat}')"
+            class="px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm transition-all shrink-0 ${
+              isActive 
+                ? 'bg-terracotta text-white shadow-sm' 
+                : 'bg-white/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-stone-300 dark:border-slate-700 hover:bg-stone-200'
+            }"
+          >
+            ${cat === 'All' ? 'Todos los perfiles' : cat}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectCategory(cat) {
+      selectedCategory = cat;
+      renderCategoryFilters();
+      renderCardsGrid();
+    }
+
+    function renderCardsGrid() {
+      const grid = document.getElementById('profileCardsGrid');
+      const searchVal = (document.getElementById('searchInput')?.value || '').toLowerCase();
+
+      if (!grid) return;
+
+      const filtered = profileCards.filter(card => {
+        const matchesCategory = selectedCategory === 'All' || card.categoria === selectedCategory;
+        const matchesSearch = (card.nombre || '').toLowerCase().includes(searchVal) || 
+                              (card.features || []).some(f => f.toLowerCase().includes(searchVal));
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full p-12 text-center bg-white/80 dark:bg-slate-900 rounded-3xl border border-stone-300 dark:border-slate-800">
+            <i data-lucide="folder-search" class="w-12 h-12 text-slate-400 mx-auto mb-3"></i>
+            <h3 class="text-base font-bold text-slate-800 dark:text-white">No se encontraron fichas</h3>
+            <p class="text-sm text-slate-500 mt-1">Prueba arrastrando un nuevo archivo JSON o ajusta la búsqueda.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(card => {
+        const coverUrl = card.img || 'https://placehold.co/600x400/FAF0EB/D96B43?text=Profile+Card';
+
+        return `
+          <div class="bg-white/90 dark:bg-slate-900 border border-stone-300 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col group relative">
+            
+            <!-- PORTADA / IMAGEN DESTACADA -->
+            <div class="h-48 overflow-hidden relative bg-stone-200 dark:bg-slate-800">
+              <img 
+                src="${coverUrl}" 
+                alt="${card.nombre}" 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                onerror="this.src='https://placehold.co/600x400/FAF0EB/D96B43?text=Cover';"
+              />
+              <span class="absolute top-3 left-3 px-3 py-1 rounded-lg bg-slate-900/80 backdrop-blur-md text-white text-xs font-semibold">
+                ${card.categoria || 'Perfil'}
+              </span>
+              ${card.destacado ? `
+                <span class="absolute top-3 right-3 px-3 py-1 rounded-lg bg-amber-500 text-slate-950 text-xs font-bold flex items-center gap-1 shadow-sm">
+                  <i data-lucide="star" class="w-3.5 h-3.5 fill-slate-950"></i> Destacado
+                </span>
+              ` : ''}
+            </div>
+
+            <!-- CUERPO DE LA TARJETA (TEXTO Y PROPIEDADES AMPLIADAS A text-sm / text-base) -->
+            <div class="p-6 flex-grow flex flex-col justify-between space-y-5">
+              <div>
+                <h3 class="font-display font-bold text-xl sm:text-2xl text-slate-900 dark:text-white mb-3">
+                  ${card.nombre}
+                </h3>
+
+                <!-- LISTA DE CARACTERÍSTICAS / PROPIEDADES MEJORADAS -->
+                ${card.features && card.features.length > 0 ? `
+                  <div class="space-y-2.5">
+                    <span class="text-xs font-bold text-terracotta dark:text-terracotta-400 uppercase tracking-wider block">
+                      Propiedades y características:
+                    </span>
+                    <ul class="space-y-2">
+                      ${card.features.map(feat => `
+                        <li class="text-sm text-slate-700 dark:text-slate-300 flex items-start gap-2.5">
+                          <span class="w-2 h-2 rounded-full bg-terracotta mt-1.5 shrink-0"></span>
+                          <span class="leading-relaxed">${feat}</span>
+                        </li>
+                      `).join('')}
+                    </ul>
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- BOTONES Y ENLACES EXTERNOS -->
+              <div class="pt-4 border-t border-stone-200 dark:border-slate-800 flex items-center justify-between gap-2">
+                ${card['url-demo'] ? `
+                  <a 
+                    href="${card['url-demo']}" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="px-4 py-2.5 rounded-xl bg-terracotta hover:bg-terracotta-600 text-white text-xs sm:text-sm font-bold flex items-center gap-2 transition-all shadow-sm"
+                  >
+                    <span>Ver Demo</span>
+                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                  </a>
+                ` : '<div></div>'}
+
+                ${card['url-ref'] ? `
+                  <a 
+                    href="${card['url-ref']}" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="px-3.5 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all"
+                  >
+                    <span>Referencia</span>
+                    <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                  </a>
+                ` : ''}
+              </div>
+
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* ==========================================================================
+       MODALES Y UTILIDADES
+       ========================================================================== */
+    function setupDemoViewerModal() {
+      const closeBtn = document.getElementById('closeDemoViewerBtn');
+      const modal = document.getElementById('demoViewerModal');
+      const modalCard = document.getElementById('demoViewerCard');
+
+      function closeModal() {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modalCard.classList.remove('scale-100');
+        modalCard.classList.add('scale-95');
+        document.getElementById('modalEmbedBody').innerHTML = '';
+      }
+
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+    }
+
+    function setupJsonModal() {
+      const openBtn = document.getElementById('openJsonModalBtn');
+      const closeBtn = document.getElementById('closeJsonModalBtn');
+      const modal = document.getElementById('jsonModal');
+      const modalCard = document.getElementById('jsonModalCard');
+      const textarea = document.getElementById('jsonContentTextarea');
+      const applyBtn = document.getElementById('applyJsonBtn');
+      const resetBtn = document.getElementById('resetJsonBtn');
+      const downloadBtn = document.getElementById('downloadJsonBtn');
+      const errorAlert = document.getElementById('jsonErrorAlert');
+
+      openBtn.addEventListener('click', () => {
+        textarea.value = JSON.stringify(profileCards, null, 2);
+        errorAlert.classList.add('hidden');
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modalCard.classList.remove('scale-95');
+        modalCard.classList.add('scale-100');
+      });
+
+      function closeModal() {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modalCard.classList.remove('scale-100');
+        modalCard.classList.add('scale-95');
+      }
+
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      applyBtn.addEventListener('click', () => {
+        try {
+          const parsed = JSON.parse(textarea.value);
+          if (!Array.isArray(parsed)) throw new Error('El JSON debe ser un arreglo de objetos.');
+          profileCards = parsed;
+          renderApplication();
+          closeModal();
+          updateDataStatusAlert('JSON Editado Manualmente', `Se han aplicado los cambios. Total de tarjetas: ${parsed.length}`);
+          showToast('JSON actualizado correctamente');
+        } catch (err) {
+          errorAlert.classList.remove('hidden');
+          document.getElementById('jsonErrorMessage').textContent = err.message;
+        }
+      });
+
+      resetBtn.addEventListener('click', () => {
+        profileCards = [...DEFAULT_PROFILE_CARDS];
+        textarea.value = JSON.stringify(profileCards, null, 2);
+        errorAlert.classList.add('hidden');
+        renderApplication();
+        updateDataStatusAlert('Restablecido', 'Se han restaurado los datos predeterminados.');
+        showToast('Restablecido a datos por defecto');
+      });
+
+      downloadBtn.addEventListener('click', () => {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(profileCards, null, 2));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", "profile-card.json");
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+        showToast('Fichero descargado');
+      });
+    }
+
+    function setupSearch() {
+      const input = document.getElementById('searchInput');
+      if (input) {
+        input.addEventListener('input', () => renderCardsGrid());
+      }
+    }
+
+    function setupThemeToggle() {
+      const btn = document.getElementById('themeToggleBtn');
+      const html = document.documentElement;
+
+      btn.addEventListener('click', () => {
+        html.classList.toggle('dark');
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      const toastMsg = document.getElementById('toastMessage');
+      if (!toast || !toastMsg) return;
+
+      toastMsg.textContent = msg;
+      toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

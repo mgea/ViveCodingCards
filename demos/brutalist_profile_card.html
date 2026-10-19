@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KIARA SINHA // BRUTALIST PORTFOLIO MATRIX</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Space Grotesk & JetBrains Mono Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            neon: {
+              lime: '#CCFF00',
+              pink: '#FF0055',
+              blue: '#0055FF',
+              cyan: '#00F0FF',
+              yellow: '#FFEA00',
+            }
+          },
+          boxShadow: {
+            'brutal': '5px 5px 0px #000000',
+            'brutal-lg': '8px 8px 0px #000000',
+            'brutal-dark': '5px 5px 0px #CCFF00',
+            'brutal-dark-lg': '8px 8px 0px #CCFF00',
+            'brutal-pink': '6px 6px 0px #FF0055',
+            'brutal-blue': '6px 6px 0px #0055FF',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom Brutalist Marquee Animation */
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+      display: flex;
+      width: 200%;
+      animation: marquee 12s linear infinite;
+    }
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+
+    /* ASCII Pattern Overlay */
+    .ascii-pattern {
+      background-image: radial-gradient(#000000 1.5px, transparent 1.5px);
+      background-size: 12px 12px;
+    }
+    .dark .ascii-pattern {
+      background-image: radial-gradient(#CCFF00 1.5px, transparent 1.5px);
+    }
+
+    /* Raw Scanlines Effect */
+    .scanlines {
+      background: linear-gradient(
+        rgba(255,255,255,0) 50%, 
+        rgba(0, 0, 0, 0.15) 50%
+      );
+      background-size: 100% 4px;
+    }
+
+    /* Smooth tactile button press */
+    .btn-tactile {
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+    }
+    .btn-tactile:active {
+      transform: translate(3px, 3px) !important;
+      box-shadow: 2px 2px 0px #000 !important;
+    }
+    .dark .btn-tactile:active {
+      box-shadow: 2px 2px 0px #CCFF00 !important;
+    }
+
+    /* Barcode Generator Lines */
+    .barcode-line {
+      display: inline-block;
+      height: 100%;
+      background-color: currentColor;
+    }
+  </style>
+</head>
+<body class="bg-[#F0F0E8] dark:bg-[#080808] text-black dark:text-white font-sans min-h-screen p-3 sm:p-6 md:p-10 transition-colors duration-200 selection:bg-neon-lime selection:text-black">
+
+  <!-- Background Grid Pattern -->
+  <div class="fixed inset-0 ascii-pattern opacity-30 pointer-events-none z-0"></div>
+
+  <!-- Main Container -->
+  <main class="relative z-10 max-w-4xl mx-auto flex flex-col gap-6">
+
+    <!-- TOP NAV / BRUTALIST CONTROL BAR -->
+    <header class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 bg-white dark:bg-black border-4 border-black dark:border-neon-lime p-3 shadow-brutal dark:shadow-brutal-dark">
+      <div class="flex items-center gap-3">
+        <span class="bg-black dark:bg-neon-lime text-white dark:text-black px-3 py-1 font-mono font-bold text-xs tracking-widest uppercase">
+          SYS // LIVE
+        </span>
+        <span class="font-mono text-xs font-bold tracking-tight uppercase truncate">
+          LOC: 41.4033° N, 2.1740° E [DESIGN_NODE]
+        </span>
+      </div>
+
+      <!-- Mode Switcher & Status -->
+      <div class="flex items-center justify-between sm:justify-end gap-3 border-t-2 sm:border-t-0 pt-2 sm:pt-0 border-black dark:border-neutral-800">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 bg-neon-lime border-2 border-black rounded-full animate-ping"></span>
+          <span class="font-mono text-xs font-extrabold uppercase tracking-wider">AVAIL_FOR_HIRE</span>
+        </div>
+
+        <button id="themeToggle" class="btn-tactile bg-neon-yellow dark:bg-neon-pink text-black border-2 border-black font-mono font-extrabold text-xs px-3 py-1.5 uppercase shadow-[2px_2px_0px_#000] hover:bg-black hover:text-white dark:hover:bg-neon-lime dark:hover:text-black">
+          <span class="dark:hidden">⚡ DARK_MODE</span>
+          <span class="hidden dark:inline">⚡ LIGHT_MODE</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- RUNNING MARQUEE TICKER BANNER -->
+    <div class="overflow-hidden bg-neon-lime dark:bg-neon-blue text-black dark:text-white border-4 border-black dark:border-white py-2 shadow-brutal dark:shadow-brutal-dark font-mono font-black text-sm tracking-wider uppercase">
+      <div class="animate-marquee whitespace-nowrap flex gap-8">
+        <span>★ SENIOR PRODUCT DESIGNER</span>
+        <span>/// UI/UX ARCHITECTURE</span>
+        <span>★ FIGMA POWER USER</span>
+        <span>/// DESIGN SYSTEMS & SYSTEMS THINKING</span>
+        <span>★ 245 PROJECTS COMPLETED</span>
+        <span>/// USER CENTRIC EXPERIENCES</span>
+        <span>★ SENIOR PRODUCT DESIGNER</span>
+        <span>/// UI/UX ARCHITECTURE</span>
+        <span>★ FIGMA POWER USER</span>
+        <span>/// DESIGN SYSTEMS & SYSTEMS THINKING</span>
+      </div>
+    </div>
+
+    <!-- MAIN PROFILE GRID COMPOSITION -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+
+      <!-- LEFT COLUMN: AVATAR + STACK (5 COLS) -->
+      <section class="md:col-span-5 flex flex-col gap-6">
+
+        <!-- AVATAR CARD -->
+        <div class="bg-white dark:bg-black border-4 border-black dark:border-neon-lime p-5 shadow-brutal dark:shadow-brutal-dark relative overflow-hidden group">
+          <!-- Raw Tag -->
+          <div class="flex justify-between items-center font-mono text-xs font-bold border-b-4 border-black dark:border-neon-lime pb-3 mb-4">
+            <span class="bg-black dark:bg-neon-lime text-white dark:text-black px-1.5 py-0.5">[01 // IDENTITY]</span>
+            <span>ID: #8920-KS</span>
+          </div>
+
+          <!-- Graphic Portrait / ASCII Canvas Box -->
+          <div class="relative bg-neon-pink dark:bg-neutral-900 border-4 border-black dark:border-white p-4 text-center my-2 aspect-square flex flex-col items-center justify-center overflow-hidden">
+            
+            <!-- Structural Crosshairs -->
+            <div class="absolute top-2 left-2 font-mono text-[10px] text-white dark:text-neon-lime font-bold">+-----+</div>
+            <div class="absolute top-2 right-2 font-mono text-[10px] text-white dark:text-neon-lime font-bold">+-----+</div>
+            <div class="absolute bottom-2 left-2 font-mono text-[10px] text-white dark:text-neon-lime font-bold">+-----+</div>
+            <div class="absolute bottom-2 right-2 font-mono text-[10px] text-white dark:text-neon-lime font-bold">+-----+</div>
+
+            <!-- Stylized Monumental Initials Avatar -->
+            <div class="relative z-10 font-mono font-black text-7xl sm:text-8xl text-white dark:text-neon-lime tracking-tighter leading-none select-none drop-shadow-[4px_4px_0px_#000]">
+              KS
+            </div>
+            
+            <div class="mt-2 inline-block bg-black text-neon-yellow font-mono text-[10px] font-bold px-2 py-0.5 border border-white uppercase tracking-widest">
+              [DESIGN_ENGINEER]
+            </div>
+
+            <!-- Raw Decorative Line Pattern -->
+            <div class="absolute inset-x-0 bottom-0 h-6 bg-black opacity-20 flex justify-between items-end px-1">
+              <span class="w-1 h-full bg-white inline-block"></span>
+              <span class="w-2 h-full bg-white inline-block"></span>
+              <span class="w-0.5 h-full bg-white inline-block"></span>
+              <span class="w-3 h-full bg-white inline-block"></span>
+              <span class="w-1.5 h-full bg-white inline-block"></span>
+              <span class="w-1 h-full bg-white inline-block"></span>
+              <span class="w-2.5 h-full bg-white inline-block"></span>
+              <span class="w-0.5 h-full bg-white inline-block"></span>
+              <span class="w-4 h-full bg-white inline-block"></span>
+            </div>
+          </div>
+
+          <!-- Quick Metadata Bar -->
+          <div class="mt-4 bg-neon-yellow dark:bg-neutral-900 text-black dark:text-neon-lime border-2 border-black dark:border-neon-lime p-3 font-mono text-xs font-bold">
+            <div class="flex justify-between border-b border-black/20 dark:border-neon-lime/30 pb-1">
+              <span>STATUS:</span>
+              <span class="text-black dark:text-white">ONLINE // ACTIVE</span>
+            </div>
+            <div class="flex justify-between pt-1">
+              <span>EXP LEVEL:</span>
+              <span class="text-black dark:text-white">SR. LEVEL (8+ YRS)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CORE SKILLS BLOCK -->
+        <div class="bg-white dark:bg-black border-4 border-black dark:border-neon-lime p-5 shadow-brutal dark:shadow-brutal-dark">
+          <div class="flex items-center justify-between border-b-4 border-black dark:border-neon-lime pb-2 mb-4">
+            <h2 class="font-mono font-black text-sm uppercase tracking-wider bg-black dark:bg-neon-lime text-white dark:text-black px-2 py-0.5">
+              [03 // STACK_MATRIX]
+            </h2>
+            <span class="font-mono text-xs font-bold text-neutral-500">[5_ITEMS]</span>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <span class="btn-tactile bg-neon-lime text-black border-2 border-black font-mono font-bold text-xs px-3 py-1.5 uppercase shadow-[3px_3px_0px_#000]">
+              UI Design
+            </span>
+            <span class="btn-tactile bg-neon-cyan text-black border-2 border-black font-mono font-bold text-xs px-3 py-1.5 uppercase shadow-[3px_3px_0px_#000]">
+              UX Research
+            </span>
+            <span class="btn-tactile bg-neon-yellow text-black border-2 border-black font-mono font-bold text-xs px-3 py-1.5 uppercase shadow-[3px_3px_0px_#000]">
+              Figma
+            </span>
+            <span class="btn-tactile bg-neon-pink text-white border-2 border-black font-mono font-bold text-xs px-3 py-1.5 uppercase shadow-[3px_3px_0px_#000]">
+              Prototyping
+            </span>
+            <span class="btn-tactile bg-white dark:bg-neutral-800 text-black dark:text-white border-2 border-black dark:border-white font-mono font-bold text-xs px-3 py-1.5 uppercase shadow-[3px_3px_0px_#000] dark:shadow-[3px_3px_0px_#fff]">
+              Design Systems
+            </span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- RIGHT COLUMN: BIO, STATS, ACTIONS (7 COLS) -->
+      <section class="md:col-span-7 flex flex-col gap-6">
+
+        <!-- MAIN NAME & TITLES BOX -->
+        <div class="bg-white dark:bg-black border-4 border-black dark:border-neon-lime p-6 sm:p-8 shadow-brutal-lg dark:shadow-brutal-dark-lg relative">
+          
+          <!-- Corner Stamp -->
+          <div class="absolute -top-4 -right-2 bg-neon-pink text-white border-2 border-black font-mono font-black text-[10px] px-3 py-1 rotate-3 uppercase shadow-[2px_2px_0px_#000]">
+            VERIFIED_OPERATOR
+          </div>
+
+          <!-- Section Tag -->
+          <div class="font-mono text-xs font-bold text-neutral-500 mb-2">
+            [PROFILE // CORE_MANIFEST]
+          </div>
+
+          <!-- MONUMENTAL NAME -->
+          <h1 class="font-black text-5xl sm:text-6xl lg:text-7xl uppercase tracking-tighter leading-none mb-2 text-black dark:text-white">
+            KIARA<br/>
+            <span class="text-neon-blue dark:text-neon-lime underline decoration-4 sm:decoration-8 decoration-black dark:decoration-white">SINHA</span>
+          </h1>
+
+          <div class="inline-block bg-black dark:bg-neon-lime text-neon-lime dark:text-black font-mono font-black text-sm sm:text-base px-3 py-1 uppercase tracking-wider mb-6 mt-2 border-2 border-black">
+            Senior Product Designer
+          </div>
+
+          <!-- Bio text block with thick brutal accent bar -->
+          <div class="border-l-4 border-black dark:border-neon-lime pl-4 my-4">
+            <p class="font-sans font-bold text-base sm:text-lg leading-snug text-neutral-800 dark:text-neutral-200">
+              Passionate about creating intuitive digital experiences that blend aesthetics with functionality. Specializing in user-centered design and innovative interface solutions.
+            </p>
+          </div>
+
+          <!-- Decorative Barcode Visual Element -->
+          <div class="mt-6 pt-4 border-t-2 border-dashed border-black dark:border-neutral-800 flex items-center justify-between">
+            <div class="font-mono text-[10px] font-bold text-neutral-400">
+              SPECIFICATION: ISO-9001 // DESIGN_SYSTEMS
+            </div>
+            <!-- Mock Barcode -->
+            <div class="h-6 flex items-center gap-0.5 text-black dark:text-neon-lime">
+              <span class="barcode-line w-1"></span>
+              <span class="barcode-line w-0.5"></span>
+              <span class="barcode-line w-2"></span>
+              <span class="barcode-line w-1"></span>
+              <span class="barcode-line w-0.5"></span>
+              <span class="barcode-line w-1.5"></span>
+              <span class="barcode-line w-3"></span>
+              <span class="barcode-line w-0.5"></span>
+              <span class="barcode-line w-2"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- STATS GRID SECTION -->
+        <div class="bg-white dark:bg-black border-4 border-black dark:border-neon-lime p-5 shadow-brutal dark:shadow-brutal-dark">
+          <div class="font-mono text-xs font-bold mb-3 bg-black dark:bg-neon-lime text-white dark:text-black inline-block px-2 py-0.5">
+            [02 // METRICS_MATRIX]
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            
+            <!-- Stat Item 1 -->
+            <div class="bg-neon-yellow dark:bg-neutral-900 border-3 border-black dark:border-white p-4 shadow-[4px_4px_0px_#000] dark:shadow-[4px_4px_0px_#fff]">
+              <div class="font-mono text-xs font-black uppercase text-neutral-700 dark:text-neutral-400">FOLLOWERS</div>
+              <div class="font-mono font-black text-3xl sm:text-4xl text-black dark:text-neon-lime mt-1">3.2K</div>
+              <div class="font-mono text-[10px] text-black dark:text-neutral-300 mt-1 font-bold">+12% THIS MONTH</div>
+            </div>
+
+            <!-- Stat Item 2 -->
+            <div class="bg-neon-lime dark:bg-neutral-900 border-3 border-black dark:border-white p-4 shadow-[4px_4px_0px_#000] dark:shadow-[4px_4px_0px_#fff]">
+              <div class="font-mono text-xs font-black uppercase text-neutral-700 dark:text-neutral-400">PROJECTS</div>
+              <div class="font-mono font-black text-3xl sm:text-4xl text-black dark:text-neon-lime mt-1">245</div>
+              <div class="font-mono text-[10px] text-black dark:text-neutral-300 mt-1 font-bold">100% SHIPPED</div>
+            </div>
+
+            <!-- Stat Item 3 -->
+            <div class="bg-neon-cyan dark:bg-neutral-900 border-3 border-black dark:border-white p-4 shadow-[4px_4px_0px_#000] dark:shadow-[4px_4px_0px_#fff]">
+              <div class="font-mono text-xs font-black uppercase text-neutral-700 dark:text-neutral-400">RATING</div>
+              <div class="font-mono font-black text-3xl sm:text-4xl text-black dark:text-neon-lime mt-1">4.9</div>
+              <div class="font-mono text-[10px] text-black dark:text-neutral-300 mt-1 font-bold">★★★★★ [5.0 MAX]</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ACTIONS & SOCIAL TRANSMISSION -->
+        <div class="bg-white dark:bg-black border-4 border-black dark:border-neon-lime p-6 shadow-brutal dark:shadow-brutal-dark flex flex-col gap-4">
+          <div class="font-mono text-xs font-bold text-neutral-500">
+            [04 // INITIATE_CONTACT]
+          </div>
+
+          <!-- Main CTA Button -->
+          <a href="mailto:kiara@example.com" class="btn-tactile w-full bg-neon-blue dark:bg-neon-lime text-white dark:text-black hover:bg-black dark:hover:bg-white dark:hover:text-black border-4 border-black dark:border-black font-mono font-black text-xl py-4 px-6 uppercase tracking-wider text-center flex items-center justify-center gap-3 shadow-[6px_6px_0px_#000] dark:shadow-[6px_6px_0px_#FF0055]">
+            <span>GET IN TOUCH</span>
+            <span class="text-2xl">➔</span>
+          </a>
+
+          <!-- Social Buttons Row -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+            
+            <!-- LinkedIn -->
+            <a href="#" aria-label="LinkedIn Profile" class="btn-tactile bg-white dark:bg-neutral-900 border-3 border-black dark:border-white p-3 flex items-center justify-center gap-2 font-mono font-bold text-xs uppercase hover:bg-neon-yellow dark:hover:bg-neon-pink hover:text-black shadow-[3px_3px_0px_#000] dark:shadow-[3px_3px_0px_#fff]">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.7a1.63 1.63 0 1 0 0 3.26 1.63 1.63 0 0 0 0-3.26z"/>
+              </svg>
+              <span>LINKEDIN</span>
+            </a>
+
+            <!-- GitHub -->
+            <a href="#" aria-label="GitHub Profile" class="btn-tactile bg-white dark:bg-neutral-900 border-3 border-black dark:border-white p-3 flex items-center justify-center gap-2 font-mono font-bold text-xs uppercase hover:bg-neon-lime dark:hover:bg-neon-blue hover:text-black shadow-[3px_3px_0px_#000] dark:shadow-[3px_3px_0px_#fff]">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+              </svg>
+              <span>GITHUB</span>
+            </a>
+
+            <!-- Dribbble -->
+            <a href="#" aria-label="Dribbble Profile" class="btn-tactile bg-white dark:bg-neutral-900 border-3 border-black dark:border-white p-3 flex items-center justify-center gap-2 font-mono font-bold text-xs uppercase hover:bg-neon-pink hover:text-white shadow-[3px_3px_0px_#000] dark:shadow-[3px_3px_0px_#fff]">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm6.8 5.7c1.2 1.3 2 3 2.1 4.8-1-.2-2.5-.3-4.3 0-.3-.8-.7-1.7-1.1-2.5 1.8-1 2.7-1.8 3.3-2.3zm-5.4-2.2c1.3 0 2.6.4 3.6 1.1-.5.5-1.4 1.2-3 2.1-1.1-2-2.1-3.1-2.3-3.2h1.7zm-3.8.8c.2.2 1.1 1.3 2.2 3.3-2.5.8-5.3 1.1-8.3 1.1 0-.1 0-.3 0-.4 0-1.5.5-3 1.5-4.1 1.2 0 2.8.1 4.6.1zm-6.2 6.2c.2 0 2.4 0 4.8-.8.5 1 1 2 1.4 3-2.9 1.6-5.1 4.3-5.8 4.7-.3-1-.4-2-.4-3 0-1.4.4-2.7 1-3.9zm3.3 8.3c.6-.5 2.5-2.9 5.2-4.4.9 2.2 1.5 4.3 1.7 5.2-1.1.5-2.3.8-3.6.8-1.2 0-2.3-.3-3.3-1.6zm8.1-.5c-.2-.7-.7-2.6-1.6-4.7 1.6-.3 3.1-.2 4.1 0-.3 2-1.3 3.7-2.5 4.7z"/>
+              </svg>
+              <span>DRIBBBLE</span>
+            </a>
+
+            <!-- Twitter / X -->
+            <a href="#" aria-label="Twitter Profile" class="btn-tactile bg-white dark:bg-neutral-900 border-3 border-black dark:border-white p-3 flex items-center justify-center gap-2 font-mono font-bold text-xs uppercase hover:bg-neon-cyan dark:hover:bg-neon-lime hover:text-black shadow-[3px_3px_0px_#000] dark:shadow-[3px_3px_0px_#fff]">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              <span>TWITTER</span>
+            </a>
+
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- FOOTER SYSTEM INFO -->
+    <footer class="mt-4 bg-black text-white dark:bg-neon-lime dark:text-black border-4 border-black p-4 font-mono text-xs flex flex-col sm:flex-row justify-between items-center gap-2 shadow-brutal">
+      <div class="font-bold uppercase tracking-widest">
+        KIARA SINHA // EXPERIMENTAL MATRIX © 2026
+      </div>
+      <div class="flex gap-4 text-[11px] font-bold">
+        <span>[NO_TEMPLATES]</span>
+        <span>[PURE_BRUTALISM]</span>
+        <span>[RAW_CANVAS]</span>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    // Brutalist Light / Dark Theme Switcher Logic
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const htmlElement = document.documentElement;
+
+    // Check stored theme or default
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      htmlElement.classList.add('dark');
+    } else {
+      htmlElement.classList.remove('dark');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      if (htmlElement.classList.contains('dark')) {
+        htmlElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        htmlElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

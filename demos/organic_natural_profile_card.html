@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiara Sinha — Earth-Centered Product Designer</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Fraunces (warm editorial serif) & Plus Jakarta Sans (organic sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Fraunces', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            cream: {
+              50: '#FCFBF7',
+              100: '#F7F3EB',
+              200: '#EFE6D5',
+              300: '#E2D3B8',
+            },
+            terracotta: {
+              400: '#E08B67',
+              500: '#C87D55',
+              600: '#A85F3A',
+              700: '#874626',
+            },
+            sage: {
+              50: '#F4F6F4',
+              100: '#E3E8E3',
+              300: '#B0BEB2',
+              500: '#6C8370',
+              700: '#4A5D4E',
+              900: '#2C3A2E',
+            },
+            sand: {
+              100: '#FAF6F0',
+              200: '#F0E8DC',
+              800: '#3D362E',
+              900: '#26221D',
+            }
+          },
+          borderRadius: {
+            'organic-1': '2rem 1.5rem 2.5rem 1.8rem',
+            'organic-2': '1.8rem 2.5rem 1.5rem 2.2rem',
+            'organic-3': '2.5rem 1.8rem 2rem 2.2rem',
+          },
+          boxShadow: {
+            'earth-soft': '0 20px 40px -15px rgba(74, 93, 78, 0.08), 0 0 15px rgba(200, 125, 85, 0.03)',
+            'earth-dark': '0 20px 40px -15px rgba(0, 0, 0, 0.4)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Smooth theme transitions */
+    body, div, button, span, a, input, textarea {
+      transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+    }
+
+    /* Subtle Paper/Linen Texture Overlay via SVG Noise */
+    .bg-noise {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+    }
+
+    /* Gentle floating animation for organic elements */
+    @keyframes sway {
+      0%, 100% { transform: rotate(0deg) translateY(0px); }
+      50% { transform: rotate(2deg) translateY(-4px); }
+    }
+    .sway-gentle {
+      animation: sway 6s ease-in-out infinite;
+    }
+
+    /* Custom Leaf Pulse */
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.04); }
+    }
+    .pulse-organic {
+      animation: pulse-slow 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body class="bg-cream-100 dark:bg-sage-900 text-sand-900 dark:text-cream-50 font-sans min-h-screen flex items-center justify-center p-4 sm:p-8 relative overflow-x-hidden antialiased selection:bg-terracotta-500 selection:text-white bg-noise">
+
+  <!-- BACKGROUND DECORATIVE ORGANIC SHAPES -->
+  <div class="fixed -top-24 -left-24 w-96 h-96 bg-sage-300/30 dark:bg-sage-700/10 rounded-full blur-3xl pointer-events-none sway-gentle"></div>
+  <div class="fixed -bottom-24 -right-24 w-96 h-96 bg-terracotta-400/20 dark:bg-terracotta-700/10 rounded-full blur-3xl pointer-events-none sway-gentle" style="animation-delay: -3s;"></div>
+
+  <!-- FLOATING NATURAL THEME SWITCHER -->
+  <button id="themeToggle" aria-label="Toggle organic dark/light mode" class="fixed top-6 right-6 z-40 p-3 rounded-organic-1 bg-cream-50 dark:bg-sage-700/80 border border-cream-200/80 dark:border-sage-500/30 text-sage-900 dark:text-cream-100 shadow-earth-soft hover:scale-105 active:scale-95 transition-all">
+    <!-- Sun / Daylight Icon -->
+    <svg id="sunIcon" class="w-5 h-5 hidden dark:block text-terracotta-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+    </svg>
+    <!-- Moon / Nightfall Leaf Icon -->
+    <svg id="moonIcon" class="w-5 h-5 block dark:hidden text-sage-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+    </svg>
+  </button>
+
+  <!-- MAIN ORGANIC PROFILE CARD -->
+  <main class="w-full max-w-xl bg-cream-50/90 dark:bg-sage-900/80 backdrop-blur-md rounded-[2.5rem] border border-cream-200/90 dark:border-sage-700/50 shadow-earth-soft dark:shadow-earth-dark overflow-hidden relative transition-all duration-500">
+    
+    <!-- CARD HEADER / BOTANICAL BANNER -->
+    <div class="h-36 sm:h-40 bg-gradient-to-r from-sage-100 via-cream-200 to-sand-100 dark:from-sage-900 dark:via-sage-900/90 dark:to-sage-700/40 p-6 flex justify-between items-start relative overflow-hidden border-b border-cream-200/60 dark:border-sage-700/40">
+      
+      <!-- Background SVG Organic Leaf Silhouette Pattern -->
+      <svg class="absolute -right-10 -top-10 w-64 h-64 text-sage-500/10 dark:text-sage-300/5 pointer-events-none sway-gentle" viewBox="0 0 100 100" fill="currentColor">
+        <path d="M50 0C60 35 100 50 100 50C100 50 65 60 50 100C35 65 0 50 0 50C0 50 35 35 50 0Z"/>
+      </svg>
+
+      <!-- Status Pill: Sustainability & Availability -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cream-50/90 dark:bg-sage-900/90 backdrop-blur-md border border-cream-200 dark:border-sage-700/80 shadow-sm">
+        <span id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-terracotta-500 pulse-organic"></span>
+        <span id="statusText" class="text-xs font-medium text-sage-900 dark:text-cream-100 tracking-wide">Accepting conscious projects</span>
+        <button id="toggleStatusBtn" class="ml-1 text-[10px] text-terracotta-600 dark:text-terracotta-400 font-semibold underline hover:text-terracotta-700 transition-colors">Switch</button>
+      </div>
+
+      <!-- Quick Action: Earth-Share -->
+      <button id="shareBtn" class="p-2.5 rounded-2xl bg-cream-50/90 dark:bg-sage-900/90 backdrop-blur-md border border-cream-200 dark:border-sage-700/80 text-sage-700 dark:text-cream-200 hover:bg-cream-100 dark:hover:bg-sage-700 transition-all text-xs font-medium flex items-center gap-1.5 shadow-sm">
+        <svg class="w-4 h-4 text-terracotta-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+        </svg>
+        <span class="hidden sm:inline">Share Profile</span>
+      </button>
+    </div>
+
+    <!-- PROFILE HERO CONTENT SECTION -->
+    <div class="px-6 sm:px-10 pb-8 relative">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between -mt-16 sm:-mt-20 gap-5 mb-6">
+        
+        <!-- AUTHENTIC PORTRAIT WITH ORGANIC MASK FRAME -->
+        <div class="relative group">
+          <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-organic-1 bg-gradient-to-tr from-terracotta-500 via-sage-500 to-cream-300 p-1 shadow-earth-soft">
+            <!-- Unsplash Portrait: Authentic & Natural Portrait -->
+            <img 
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400" 
+              alt="Kiara Sinha portrait" 
+              class="w-full h-full object-cover rounded-organic-2 border-2 border-cream-50 dark:border-sage-900 transition-transform duration-500 group-hover:scale-[1.02]"
+              onerror="this.onerror=null; this.src='https://placehold.co/300x300/EFE6D5/4A5D4E?text=KS';"
+            />
+          </div>
+          <!-- Verified Eco-Badge Indicator -->
+          <div class="absolute -bottom-1 -right-1 bg-sage-700 dark:bg-sage-500 text-cream-50 p-1.5 rounded-full border-2 border-cream-50 dark:border-sage-900 shadow-sm" title="Ethical Design Certified">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- PRIMARY CALL TO ACTION BUTTONS -->
+        <div class="flex items-center gap-3">
+          <button id="openModalBtn" class="flex-1 sm:flex-initial px-5 py-3 rounded-organic-1 bg-sage-700 hover:bg-sage-900 dark:bg-terracotta-500 dark:hover:bg-terracotta-600 text-cream-50 text-xs sm:text-sm font-semibold shadow-md hover:shadow-earth-soft active:scale-95 transition-all flex items-center justify-center gap-2">
+            <svg class="w-4 h-4 text-cream-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            <span>Collaborate</span>
+          </button>
+
+          <button id="bookCallBtn" class="px-4 py-3 rounded-organic-2 border border-sage-300/80 dark:border-sage-700 bg-cream-100/50 dark:bg-sage-800/50 text-sage-900 dark:text-cream-100 hover:bg-cream-200/60 dark:hover:bg-sage-700 transition-all text-xs sm:text-sm font-semibold flex items-center gap-1.5">
+            <span>Schedule Intro</span>
+            <svg class="w-3.5 h-3.5 text-terracotta-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- IDENTITY & WARM EDITORIAL BIO -->
+      <div class="space-y-2">
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <h1 class="font-serif text-2xl sm:text-3xl font-normal text-sand-900 dark:text-cream-50 tracking-tight">Kiara Sinha</h1>
+          <span class="px-2.5 py-0.5 rounded-full bg-terracotta-400/15 text-terracotta-700 dark:text-terracotta-400 text-[11px] font-medium tracking-wide">Conscious Lead Designer</span>
+        </div>
+        <p class="text-xs sm:text-sm font-medium text-sage-700 dark:text-sage-300 tracking-wider uppercase">Senior Product Designer & Systems Thinker</p>
+        <p class="text-xs sm:text-sm text-sand-800/90 dark:text-cream-200/80 leading-relaxed max-w-lg font-sans font-normal pt-1">
+          Crafting human-first digital products with an emphasis on calm interfaces, regenerative design systems, and ethical digital experiences. Grounded in research and intentional aesthetics.
+        </p>
+      </div>
+
+      <!-- SUSTAINABLE METRICS & IMPACT DASHBOARD -->
+      <div class="grid grid-cols-3 gap-3 my-7">
+        
+        <div class="p-4 rounded-organic-1 bg-cream-100/80 dark:bg-sage-800/40 border border-cream-200/80 dark:border-sage-700/50 hover:border-terracotta-400/40 transition-all">
+          <div class="text-[11px] font-medium text-sage-700 dark:text-sage-300 mb-1 flex items-center gap-1">
+            <svg class="w-3 h-3 text-terracotta-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+            <span>Projects</span>
+          </div>
+          <div class="font-serif text-xl sm:text-2xl font-normal text-sand-900 dark:text-cream-50">240+</div>
+          <div class="text-[10px] text-sage-500 dark:text-sage-400 mt-0.5">Shaped with care</div>
+        </div>
+
+        <div class="p-4 rounded-organic-2 bg-cream-100/80 dark:bg-sage-800/40 border border-cream-200/80 dark:border-sage-700/50 hover:border-terracotta-400/40 transition-all">
+          <div class="text-[11px] font-medium text-sage-700 dark:text-sage-300 mb-1 flex items-center gap-1">
+            <svg class="w-3 h-3 text-sage-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+            </svg>
+            <span>Satisfaction</span>
+          </div>
+          <div class="font-serif text-xl sm:text-2xl font-normal text-sand-900 dark:text-cream-50">4.9/5</div>
+          <div class="text-[10px] text-sage-500 dark:text-sage-400 mt-0.5">Client trust score</div>
+        </div>
+
+        <div class="p-4 rounded-organic-3 bg-cream-100/80 dark:bg-sage-800/40 border border-cream-200/80 dark:border-sage-700/50 hover:border-terracotta-400/40 transition-all">
+          <div class="text-[11px] font-medium text-sage-700 dark:text-sage-300 mb-1 flex items-center gap-1">
+            <svg class="w-3 h-3 text-terracotta-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h1.5a2.5 2.5 0 002.5-2.5V11a2 2 0 012-2h1.064"/>
+            </svg>
+            <span>Eco Impact</span>
+          </div>
+          <div class="font-serif text-xl sm:text-2xl font-normal text-sand-900 dark:text-cream-50">100%</div>
+          <div class="text-[10px] text-sage-500 dark:text-sage-400 mt-0.5">Low-carbon UX</div>
+        </div>
+
+      </div>
+
+      <!-- INTERACTIVE TAB NAVIGATION -->
+      <div class="border-b border-cream-200/80 dark:border-sage-700/60 mb-5">
+        <nav class="flex gap-6 -mb-px" aria-label="Organic Navigation Tabs">
+          <button id="tabPhilosophyBtn" class="pb-3 text-xs sm:text-sm font-semibold border-b-2 border-terracotta-500 text-terracotta-600 dark:text-terracotta-400 flex items-center gap-1.5 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            </svg>
+            Core Philosophy & Skills
+          </button>
+          <button id="tabJournalBtn" class="pb-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-sage-600 dark:text-sage-400 hover:text-sage-900 dark:hover:text-cream-100 flex items-center gap-1.5 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6"/>
+            </svg>
+            Recent Notes & Work
+          </button>
+        </nav>
+      </div>
+
+      <!-- TAB 1: CORE PHILOSOPHY & ORGANIC SKILL CLUSTER -->
+      <div id="tabPhilosophyContent" class="space-y-4">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-sage-600 dark:text-sage-400">Design Competencies</h3>
+        
+        <div class="flex flex-wrap gap-2.5">
+          
+          <div class="skill-tag px-3.5 py-2 rounded-organic-1 bg-cream-100 dark:bg-sage-800/60 text-sand-800 dark:text-cream-100 text-xs font-medium border border-cream-200 dark:border-sage-700/60 hover:border-terracotta-400 hover:bg-cream-200/50 transition-all cursor-default flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-sage-500"></span>
+            <span>UI & Systems Design</span>
+          </div>
+
+          <div class="skill-tag px-3.5 py-2 rounded-organic-2 bg-cream-100 dark:bg-sage-800/60 text-sand-800 dark:text-cream-100 text-xs font-medium border border-cream-200 dark:border-sage-700/60 hover:border-terracotta-400 hover:bg-cream-200/50 transition-all cursor-default flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-terracotta-400"></span>
+            <span>UX Research & Strategy</span>
+          </div>
+
+          <div class="skill-tag px-3.5 py-2 rounded-organic-3 bg-cream-100 dark:bg-sage-800/60 text-sand-800 dark:text-cream-100 text-xs font-medium border border-cream-200 dark:border-sage-700/60 hover:border-terracotta-400 hover:bg-cream-200/50 transition-all cursor-default flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-sand-800 dark:bg-cream-200"></span>
+            <span>Figma & Prototyping</span>
+          </div>
+
+          <div class="skill-tag px-3.5 py-2 rounded-organic-1 bg-cream-100 dark:bg-sage-800/60 text-sand-800 dark:text-cream-100 text-xs font-medium border border-cream-200 dark:border-sage-700/60 hover:border-terracotta-400 hover:bg-cream-200/50 transition-all cursor-default flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-sage-700"></span>
+            <span>Sustainable UX</span>
+          </div>
+
+          <div class="skill-tag px-3.5 py-2 rounded-organic-2 bg-cream-100 dark:bg-sage-800/60 text-sand-800 dark:text-cream-100 text-xs font-medium border border-cream-200 dark:border-sage-700/60 hover:border-terracotta-400 hover:bg-cream-200/50 transition-all cursor-default flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-terracotta-600"></span>
+            <span>Accessibility (a11y)</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 2: JOURNAL & WORK STREAM (HIDDEN BY DEFAULT) -->
+      <div id="tabJournalContent" class="hidden space-y-3">
+        <div class="p-3.5 rounded-organic-1 bg-cream-100/60 dark:bg-sage-800/30 border border-cream-200 dark:border-sage-700/50 flex items-start gap-3">
+          <div class="p-2 rounded-full bg-terracotta-400/10 text-terracotta-600 dark:text-terracotta-400 mt-0.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-sand-900 dark:text-cream-100">Published Case Study: "Designing for Low-Energy Web Apps"</p>
+            <p class="text-[11px] text-sage-600 dark:text-sage-400">Green Tech Journal • 3 days ago</p>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-organic-2 bg-cream-100/60 dark:bg-sage-800/30 border border-cream-200 dark:border-sage-700/50 flex items-start gap-3">
+          <div class="p-2 rounded-full bg-sage-500/10 text-sage-700 dark:text-sage-300 mt-0.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-sand-900 dark:text-cream-100">Updated Earth-Toned Open Source Figma System</p>
+            <p class="text-[11px] text-sage-600 dark:text-sage-400">Design System Community • Last week</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FOOTER & SOCIAL CONNECTIVITY -->
+    <div class="px-6 sm:px-10 py-5 bg-cream-200/40 dark:bg-sage-900/60 border-t border-cream-200/80 dark:border-sage-700/50 flex items-center justify-between">
+      <span class="text-xs font-medium text-sage-700 dark:text-sage-300 flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5 text-terracotta-500" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+        </svg>
+        Connect with Kiara
+      </span>
+
+      <div class="flex items-center gap-2">
+        <a href="#" aria-label="LinkedIn" class="p-2.5 rounded-organic-1 text-sage-700 dark:text-cream-200 hover:text-terracotta-600 dark:hover:text-terracotta-400 hover:bg-cream-100 dark:hover:bg-sage-800 transition-all">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.7a1.63 1.63 0 1 0 0 3.26 1.63 1.63 0 0 0 0-3.26z"/></svg>
+        </a>
+
+        <a href="#" aria-label="GitHub" class="p-2.5 rounded-organic-2 text-sage-700 dark:text-cream-200 hover:text-terracotta-600 dark:hover:text-terracotta-400 hover:bg-cream-100 dark:hover:bg-sage-800 transition-all">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+        </a>
+
+        <a href="#" aria-label="Dribbble" class="p-2.5 rounded-organic-3 text-sage-700 dark:text-cream-200 hover:text-terracotta-600 dark:hover:text-terracotta-400 hover:bg-cream-100 dark:hover:bg-sage-800 transition-all">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm6.8 5.7c1.2 1.3 2 3 2.1 4.8-1-.2-2.5-.3-4.3 0-.3-.8-.7-1.7-1.1-2.5 1.8-1 2.7-1.8 3.3-2.3zm-5.4-2.2c1.3 0 2.6.4 3.6 1.1-.5.5-1.4 1.2-3 2.1-1.1-2-2.1-3.1-2.3-3.2h1.7zm-3.8.8c.2.2 1.1 1.3 2.2 3.3-2.5.8-5.3 1.1-8.3 1.1 0-.1 0-.3 0-.4 0-1.5.5-3 1.5-4.1 1.2 0 2.8.1 4.6.1zm-6.2 6.2c.2 0 2.4 0 4.8-.8.5 1 1 2 1.4 3-2.9 1.6-5.1 4.3-5.8 4.7-.3-1-.4-2-.4-3 0-1.4.4-2.7 1-3.9zm3.3 8.3c.6-.5 2.5-2.9 5.2-4.4.9 2.2 1.5 4.3 1.7 5.2-1.1.5-2.3.8-3.6.8-1.2 0-2.3-.3-3.3-1.6zm8.1-.5c-.2-.7-.7-2.6-1.6-4.7 1.6-.3 3.1-.2 4.1 0-.3 2-1.3 3.7-2.5 4.7z"/></svg>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL DIALOG: INQUIRY -->
+  <div id="contactModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sand-900/40 dark:bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+    <div id="modalCard" class="bg-cream-50 dark:bg-sage-900 border border-cream-200 dark:border-sage-700 rounded-organic-1 max-w-md w-full p-6 sm:p-8 shadow-earth-soft transform scale-95 transition-transform duration-300">
+      
+      <div class="flex items-center justify-between pb-4 border-b border-cream-200 dark:border-sage-800">
+        <div>
+          <h3 class="font-serif text-xl font-normal text-sand-900 dark:text-cream-50">Start a Conversation</h3>
+          <p class="text-xs text-sage-600 dark:text-sage-400 mt-0.5">Let's discuss conscious digital solutions.</p>
+        </div>
+        <button id="closeModalBtn" class="text-sage-500 hover:text-sand-900 dark:hover:text-cream-100 p-1.5 rounded-full hover:bg-cream-200/50 dark:hover:bg-sage-800">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form id="contactForm" class="mt-5 space-y-4" onsubmit="event.preventDefault(); submitInquiry();">
+        <div>
+          <label class="block text-xs font-medium text-sage-700 dark:text-sage-300 mb-1.5">Your Email</label>
+          <input type="email" required placeholder="you@organization.com" class="w-full px-4 py-2.5 rounded-organic-2 border border-cream-200 dark:border-sage-700 bg-cream-100/60 dark:bg-sage-800/50 text-sand-900 dark:text-cream-50 text-xs sm:text-sm focus:ring-2 focus:ring-terracotta-400 focus:outline-none">
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-sage-700 dark:text-sage-300 mb-1.5">Project Scope</label>
+          <textarea rows="3" required placeholder="Describe your mission or project goals..." class="w-full px-4 py-2.5 rounded-organic-3 border border-cream-200 dark:border-sage-700 bg-cream-100/60 dark:bg-sage-800/50 text-sand-900 dark:text-cream-50 text-xs sm:text-sm focus:ring-2 focus:ring-terracotta-400 focus:outline-none"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-organic-1 bg-sage-700 hover:bg-sage-900 dark:bg-terracotta-500 dark:hover:bg-terracotta-600 text-cream-50 text-xs sm:text-sm font-semibold shadow-md transition-all">
+          Send Message
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-organic-1 bg-sage-900 text-cream-100 text-xs font-medium shadow-earth-soft transition-all duration-300 transform translate-y-12 opacity-0 pointer-events-none flex items-center gap-2.5">
+    <span class="w-2.5 h-2.5 rounded-full bg-terracotta-400"></span>
+    <span id="toastMessage">Profile link copied to clipboard</span>
+  </div>
+
+  <!-- JAVASCRIPT INTERACTION LOGIC -->
+  <script>
+    // Dark/Light Organic Theme Logic
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+
+    themeToggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.setItem('organic-theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    if (localStorage.getItem('organic-theme') === 'dark' || (!('organic-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      html.classList.add('dark');
+    } else {
+      html.classList.remove('dark');
+    }
+
+    // Interactive Status Toggle
+    let isAvailable = true;
+    const statusIndicator = document.getElementById('statusIndicator');
+    const statusText = document.getElementById('statusText');
+    const toggleStatusBtn = document.getElementById('toggleStatusBtn');
+
+    toggleStatusBtn.addEventListener('click', () => {
+      isAvailable = !isAvailable;
+      if (isAvailable) {
+        statusIndicator.className = 'w-2.5 h-2.5 rounded-full bg-terracotta-500 pulse-organic';
+        statusText.textContent = 'Accepting conscious projects';
+      } else {
+        statusIndicator.className = 'w-2.5 h-2.5 rounded-full bg-sage-500';
+        statusText.textContent = 'Fully booked for Q3';
+      }
+    });
+
+    // Share Button & Fallback Clipboard Exec
+    const shareBtn = document.getElementById('shareBtn');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+
+    function showToast(msg) {
+      toastMessage.textContent = msg;
+      toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+      }, 2800);
+    }
+
+    shareBtn.addEventListener('click', () => {
+      const tempInput = document.createElement('input');
+      tempInput.value = window.location.href;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+
+      showToast('Profile link copied to clipboard');
+    });
+
+    // Tab Navigation Logic
+    const tabPhilosophyBtn = document.getElementById('tabPhilosophyBtn');
+    const tabJournalBtn = document.getElementById('tabJournalBtn');
+    const tabPhilosophyContent = document.getElementById('tabPhilosophyContent');
+    const tabJournalContent = document.getElementById('tabJournalContent');
+
+    tabPhilosophyBtn.addEventListener('click', () => {
+      tabPhilosophyBtn.className = 'pb-3 text-xs sm:text-sm font-semibold border-b-2 border-terracotta-500 text-terracotta-600 dark:text-terracotta-400 flex items-center gap-1.5 transition-all';
+      tabJournalBtn.className = 'pb-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-sage-600 dark:text-sage-400 hover:text-sage-900 dark:hover:text-cream-100 flex items-center gap-1.5 transition-all';
+      tabPhilosophyContent.classList.remove('hidden');
+      tabJournalContent.classList.add('hidden');
+    });
+
+    tabJournalBtn.addEventListener('click', () => {
+      tabJournalBtn.className = 'pb-3 text-xs sm:text-sm font-semibold border-b-2 border-terracotta-500 text-terracotta-600 dark:text-terracotta-400 flex items-center gap-1.5 transition-all';
+      tabPhilosophyBtn.className = 'pb-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-sage-600 dark:text-sage-400 hover:text-sage-900 dark:hover:text-cream-100 flex items-center gap-1.5 transition-all';
+      tabJournalContent.classList.remove('hidden');
+      tabPhilosophyContent.classList.add('hidden');
+    });
+
+    // Modal Inquiry Dialog Controls
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const contactModal = document.getElementById('contactModal');
+    const modalCard = document.getElementById('modalCard');
+    const bookCallBtn = document.getElementById('bookCallBtn');
+
+    function openModal() {
+      contactModal.classList.remove('opacity-0', 'pointer-events-none');
+      contactModal.classList.add('opacity-100');
+      modalCard.classList.remove('scale-95');
+      modalCard.classList.add('scale-100');
+    }
+
+    function closeModal() {
+      contactModal.classList.remove('opacity-100');
+      contactModal.classList.add('opacity-0', 'pointer-events-none');
+      modalCard.classList.remove('scale-100');
+      modalCard.classList.add('scale-95');
+    }
+
+    openModalBtn.addEventListener('click', openModal);
+    bookCallBtn.addEventListener('click', () => {
+      showToast('Opening intro scheduler...');
+    });
+    closeModalBtn.addEventListener('click', closeModal);
+    contactModal.addEventListener('click', (e) => {
+      if (e.target === contactModal) closeModal();
+    });
+
+    function submitInquiry() {
+      closeModal();
+      showToast('Thank you! Your message was received.');
+    }
+  </script>
+</body>
+</html>

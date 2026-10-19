@@ -1,0 +1,131 @@
+[
+{
+    "id": "profile card (codepen.io)",
+    "nombre": "Código HTML ejemplo estilo Modern SaaS",
+    "categoria": "SaaS / Modern UI",
+    "destacado": false,
+    "img": "./img/codepen.png",
+    "features": [
+      "Interfaz limpia y profesional orientada a producto SaaS y marcas digitales",
+      "Badges de estado interactivos (Disponible para proyectos / Ocupada)",
+      "Navegación por pestañas para Overview/Skills y flujo de Actividad Reciente",
+      "Métricas clave integradas con indicadores de rendimiento (+12% seguidores, 245 proyectos, 4.9 rating)",
+      "Etiquetas de competencias interactivas con estados de hover (UI, UX, Figma, Prototyping, Design Systems)",
+      "Ventana modal de contacto directo y copia de enlace al portapapeles"
+    ],
+    "url-demo": "https://codepen.io/kiaraelix/pen/NPxMEMd",
+    "url-ref": "https://www.awwwards.com/inspiration/search?text=saas"
+  },
+
+
+{
+"id": "minimalist-profile-card",
+"nombre": "Minimalist Clean Profile",
+"categoria": "Minimalist",
+"destacado": false,
+"img": "./img/minimalista2.png",
+"features": [
+"Diseño sobrio y elegante basado en principios de diseño de UI suizo/minimalista",
+"Tipografía tipográfica Inter con jerarquía visual precisa y acabados limpios",
+"Badges de disponibilidad 'Available' en directo con indicador verde de pulso",
+"Estadísticas clave integradas (3.2K Seguidores, 245 Proyectos, 4.9 Valoración)",
+"Módulo de habilidades esenciales (UI Design, UX Research, Figma, Prototyping, Design Systems)",
+"Modo Claro / Oscuro nativo con paleta Neutral suave y botón de cambio fluido"
+],
+"url-demo": "./demos/profile_card_minimalista.html",
+"url-ref": "https://www.awwwards.com/inspiration/search?text=minimalism"
+},
+
+{
+"id": "modern-saas-card",
+"nombre": "Modern SaaS Profile",
+"categoria": "SaaS / Modern UI",
+"destacado": true,
+"img": "./img/saas.png",
+"features": [
+"Interfaz limpia y profesional orientada a producto SaaS y marcas digitales",
+"Badges de estado interactivos (Disponible para proyectos / Ocupada)",
+"Navegación por pestañas para Overview/Skills y flujo de Actividad Reciente",
+"Métricas clave integradas con indicadores de rendimiento (+12% seguidores, 245 proyectos, 4.9 rating)",
+"Etiquetas de competencias interactivas con estados de hover (UI, UX, Figma, Prototyping, Design Systems)",
+"Ventana modal de contacto directo y copia de enlace al portapapeles"
+],
+"url-demo": "./demos/modern_saas_profile_card.html",
+"url-ref": "https://www.awwwards.com/inspiration/search?text=saas"
+},
+
+{
+    "id": "brutalist-portfolio",
+    "nombre": "Neo-Brutalist Matrix",
+    "categoria": "Neobrutalism",
+    "destacado": true,
+    "img": "./img/neob.png",
+    "features": [
+      "Estética Neo-Brutalista con bordes gruesos y sombras sólidas de alto contraste",
+      "Paleta de colores Neón de alta saturación (Lime, Pink, Blue, Cyan, Yellow)",
+      "Cinta tipográfica animada en bucle continuo (Marquee Ticker)",
+      "Patrones ASCII en fondo con efectos de líneas de escaneo (Scanlines)",
+      "Efectos táctiles de presión dura en botones (Press 3px Offset)",
+      "Modo Claro / Oscuro brutalista con tipografías Space Grotesk y JetBrains Mono"
+    ],
+    "url-demo": "./demos/brutalist_profile_card.html",
+    "url-ref": "https://www.awwwards.com/inspiration/search?text=brutalism"
+  },
+
+
+{
+"id": "organic-natural-card",
+"nombre": "Organic design profile",
+"categoria": "Organic Natural",
+"destacado": true,
+"img": "./img/organic.png",
+"features": [
+"Estética orgánica y natural con paleta de tonos tierra (Cream, Terracotta, Sage y Sand)",
+"Formas con bordes orgánicos asimétricos y textura sutil de papel/lino",
+"Indicador de estado dinámico (Aceptando proyectos conscientes / Agendado)",
+"Pestañas de navegación e interacción entre Filosofía de Diseño y Diario de Trabajo",
+"Métricas de impacto sostenible (Proyectos, Satisfacción 4.9/5, 100% UX de bajo carbono)",
+"Formulario modal interactivo para solicitudes de colaboración y reserva de llamada"
+],
+"url-demo": "./demos/organic_natural_profile_card.html",
+"url-ref": "https://www.awwwards.com/inspiration/search?text=organic"
+},
+
+
+  {
+"id": "Claymorphism",
+"nombre": "3D Claymorphic Designer",
+"categoria": "Claymorphism",
+"destacado": true,
+"img": "./img/clay.png",
+"features": [
+"Volumen 3D suave e inflado con doble sombra interna y externa (Clay effect)",
+"Bordes ultra-redondeados (border-radius 2.5rem) y paleta de tonos pastel táctiles",
+"Microinteracciones de pulsación elástica en botones e insignias (Tactile bounce)",
+"Indicador de estado 'Available for Web3 & 3D Projects' con efecto de burbuja flotante",
+"Tarjetas secundarias para métricas clave (+4.8k seguidores, 180+ assets 3D, 4.98 valoración)",
+"Módulo interactivo de habilidades en plastilina digital (Spline 3D, Blender, Figma Clay, Rive)"
+],
+"url-demo": "./demos/claymorphism_profile_card.html",
+"url-ref": "https://www.awwwards.com/inspiration/search?text=claymorphism"
+},
+
+{
+"id": "synthwave-profile-card",
+"nombre": "Retro Synthwave Profile",
+"categoria": "Retro / Cyberpunk",
+"destacado": true,
+"img": "./img/retro2.png",
+"features": [
+"Estética Synthwave 80s con paleta Neon (Cyan, Pink, Purple, Yellow y Deep Black)",
+"Efecto visual de líneas de escaneo CRT y parpadeo intermitente opcional con conmutador",
+"Horizonte 3D animado en tiempo real mediante HTML5 Canvas Grid Render",
+"Sintetizador Web Audio FX integrando sonidos arcade ochenteros interactivos",
+"Sello VHS animado en vivo con marcador de hora en tiempo real y contador 'PLAY'",
+"Métricas clave de jugador (High Score, Stages Cleared y Combo Multiplier)"
+],
+"url-demo": "./demos/retro_synthwave_profile_card.html",
+"url-ref": "https://www.awwwards.com/inspiration/search?text=synthwave"
+}
+
+]
